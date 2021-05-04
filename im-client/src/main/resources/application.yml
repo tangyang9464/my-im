@@ -1,0 +1,12 @@
+im:
+  client:
+    userid: ${random.int[0,65536]}
+    username: tangyang
+#kafka
+spring:
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+#redis
+  redis:
+    host: 127.0.0.1
+    port: 6379

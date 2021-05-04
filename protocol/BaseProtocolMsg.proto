@@ -1,0 +1,13 @@
+syntax = "proto2";
+
+package protocol;
+
+option java_package = "com.common.protocol";
+option java_outer_classname = "MsgProtobuf";
+
+message ProtocolMsg {
+  required string type = 1;
+  required string fromUserId = 2;
+  optional string toUserId = 3;
+  optional string msg = 4;
+}
