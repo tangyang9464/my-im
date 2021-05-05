@@ -30,7 +30,7 @@ public class ImClientApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         client.start();
-        Thread commandThread = new Thread(new Scan(client));
-        commandThread.start();
+//        Thread commandThread = new Thread(new Scan(client));
+//        commandThread.start();
     }
 }

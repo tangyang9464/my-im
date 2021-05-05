@@ -4,14 +4,18 @@ import com.common.protocol.MsgProtobuf;
 import com.common.redis.RedisUtil;
 import com.common.serialize.ProtobufDecoder;
 import com.common.serialize.ProtobufEncoder;
+import com.common.spring.SpringContextUtil;
 import com.common.vo.ServerInfo;
 import com.common.zk.CuratorUtil;
+import com.terminal.Scan;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -20,6 +24,8 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author: tangyang9464
@@ -30,8 +36,10 @@ import java.util.Set;
 public class NettyClient {
     private static final Bootstrap bootstrap;
     private static final NioEventLoopGroup group;
-    private static final ClientHandler clientHandler;
     private ChannelFuture cf;
+    private static AtomicInteger retryNum;
+    private boolean exit=false;
+    private final int MAX_RETRY_NUM = 1;
     @Resource
     private RedisUtil redisUtil;
 
@@ -41,9 +49,9 @@ public class NettyClient {
     private String username;
 
     static {
+        retryNum = new AtomicInteger(0);
         group = new NioEventLoopGroup();
         bootstrap = new Bootstrap();
-        clientHandler = new ClientHandler();
         bootstrap.group(group)
                 .channel(NioSocketChannel.class)
                 .option(ChannelOption.SO_KEEPALIVE,true)
@@ -53,27 +61,52 @@ public class NettyClient {
                         nioSocketChannel.pipeline()
                                 .addLast(new ProtobufDecoder())
                                 .addLast(new ProtobufEncoder())
-                                .addLast(clientHandler);
+                                .addLast("ping",new IdleStateHandler(60, 20, 60 * 10, TimeUnit.SECONDS))
+                                .addLast(SpringContextUtil.getApplicationContext().getBean(ClientHandler.class));
                     }
                 });
     }
+
     public void start(){
-        try{
-            //登录并获取可用服务器地址
+        exit=false;
+        NettyClient client = this;
+        //登录并获取可用服务器地址
             ServerInfo suitableServer = login();
-            //连接上线
-            cf = bootstrap.connect(suitableServer.getIp(),suitableServer.getPort()).sync();
-            //连接成功就马上把用户名发送过去
-            if(cf.isSuccess()){
-                System.out.println("本机:"+userid);
-                MsgProtobuf.ProtocolMsg.Builder builder = MsgProtobuf.ProtocolMsg.newBuilder();
-                builder.setType("login")
-                        .setFromUserId(userid);
-                cf.channel().writeAndFlush(builder.build());
+        //连接上线
+        cf = bootstrap.connect(suitableServer.getIp(),suitableServer.getPort());
+        cf.addListener(new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture channelFuture) throws Exception {
+                //连接成功就马上把用户名发送过去并启动终端
+                if(channelFuture.isSuccess()){
+                    System.out.println("本机:"+userid);
+                    retryNum.set(0);
+                    Thread commandThread = new Thread(new Scan(client));
+                    commandThread.start();
+                    MsgProtobuf.ProtocolMsg.Builder builder = MsgProtobuf.ProtocolMsg.newBuilder();
+                    builder.setType(MsgProtobuf.ProtocolMsg.MsgEnumType.MSG_TYPE_LOGIN)
+                            .setFromUserId(userid);
+                    channelFuture.channel().writeAndFlush(builder.build());
+                }
+                else{
+                    if(retryNum.get()>=MAX_RETRY_NUM){
+                        log.error("连接次数超限，稍后再试");
+                        retryNum.set(0);
+                        group.shutdownGracefully();
+                        throw new Exception("无法连接服务器"+suitableServer.getIp()+":"+suitableServer.getPort());
+                    }
+                    else{
+                        log.warn("连接失败，5秒后重连");
+                        log.warn("重连次数："+retryNum.incrementAndGet());
+                        channelFuture.channel().eventLoop().schedule(()->start(),5,TimeUnit.SECONDS);
+                    }
+                }
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        });
+    }
+
+    public boolean getState(){
+        return exit;
     }
 
     /**
@@ -87,6 +120,10 @@ public class NettyClient {
         try{
             List<String> serverNodes = CuratorUtil.getAllNodeForServer();
             //负载均衡
+            if (serverNodes.size()==0){
+                log.error("无可用服务器");
+                throw new Exception("无可用服务器");
+            }
             String[] nodeUrl = serverNodes.get(new Random().nextInt(serverNodes.size())).split("_");
             //
             String ip = nodeUrl[0];
@@ -105,7 +142,7 @@ public class NettyClient {
     public void sendGroupMsg(String msg){
         if(cf!=null){
             MsgProtobuf.ProtocolMsg.Builder builder = MsgProtobuf.ProtocolMsg.newBuilder();
-            builder.setType("group")
+            builder.setType(MsgProtobuf.ProtocolMsg.MsgEnumType.MSG_TYPE_GROUP)
                     .setFromUserId(userid)
                     .setMsg(msg);
             cf.channel().writeAndFlush(builder.build());
@@ -124,7 +161,7 @@ public class NettyClient {
                 return;
             }
             MsgProtobuf.ProtocolMsg.Builder builder = MsgProtobuf.ProtocolMsg.newBuilder();
-            builder.setType("private")
+            builder.setType(MsgProtobuf.ProtocolMsg.MsgEnumType.MSG_TYPE_PRIVATE)
                     .setFromUserId(userid)
                     .setToUserId(toUserId)
                     .setMsg(msg);
@@ -139,5 +176,10 @@ public class NettyClient {
      */
     public Set<String> getAllOnlineUser(){
         return redisUtil.getAllUser();
+    }
+
+    public void close(){
+        exit=true;
+        group.shutdownGracefully();
     }
 }

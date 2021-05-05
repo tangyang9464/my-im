@@ -1,5 +1,6 @@
 package com.config;
 
+import com.common.kafka.uitl.KafkaTopicEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +17,7 @@ public class KafkaTopicConfig implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() {
-        String topics = "group";
+        String topics = KafkaTopicEnum.GROUP_CHAT.getName();
         try {
             topics += ","+InetAddress.getLocalHost().getHostAddress()+"_"+port;
             } catch (UnknownHostException e) {

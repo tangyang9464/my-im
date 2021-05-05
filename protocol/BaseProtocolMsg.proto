@@ -1,4 +1,4 @@
-syntax = "proto2";
+syntax = "proto3";
 
 package protocol;
 
@@ -6,8 +6,14 @@ option java_package = "com.common.protocol";
 option java_outer_classname = "MsgProtobuf";
 
 message ProtocolMsg {
-  required string type = 1;
-  required string fromUserId = 2;
-  optional string toUserId = 3;
-  optional string msg = 4;
+  enum MsgEnumType{
+    MSG_TYPE_GROUP=0;
+    MSG_TYPE_PRIVATE=1;
+    MSG_TYPE_HEARTBEAT=2;
+    MSG_TYPE_LOGIN=3;
+  }
+  ProtocolMsg.MsgEnumType type=1;
+  string fromUserId = 2;
+  string toUserId = 3;
+  string msg = 4;
 }

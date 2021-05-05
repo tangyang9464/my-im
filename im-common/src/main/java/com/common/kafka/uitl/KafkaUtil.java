@@ -1,4 +1,4 @@
-package com.common.kafka;
+package com.common.kafka.uitl;
 
 import com.common.protocol.MsgProtobuf;
 import lombok.extern.slf4j.Slf4j;

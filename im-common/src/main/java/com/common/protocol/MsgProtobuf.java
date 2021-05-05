@@ -19,68 +19,47 @@ public final class MsgProtobuf {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>required string type = 1;</code>
-     * @return Whether the type field is set.
+     * <code>.protocol.ProtocolMsg.MsgEnumType type = 1;</code>
+     * @return The enum numeric value on the wire for type.
      */
-    boolean hasType();
+    int getTypeValue();
     /**
-     * <code>required string type = 1;</code>
+     * <code>.protocol.ProtocolMsg.MsgEnumType type = 1;</code>
      * @return The type.
      */
-    java.lang.String getType();
-    /**
-     * <code>required string type = 1;</code>
-     * @return The bytes for type.
-     */
-    com.google.protobuf.ByteString
-        getTypeBytes();
+    com.common.protocol.MsgProtobuf.ProtocolMsg.MsgEnumType getType();
 
     /**
-     * <code>required string fromUserId = 2;</code>
-     * @return Whether the fromUserId field is set.
-     */
-    boolean hasFromUserId();
-    /**
-     * <code>required string fromUserId = 2;</code>
+     * <code>string fromUserId = 2;</code>
      * @return The fromUserId.
      */
     java.lang.String getFromUserId();
     /**
-     * <code>required string fromUserId = 2;</code>
+     * <code>string fromUserId = 2;</code>
      * @return The bytes for fromUserId.
      */
     com.google.protobuf.ByteString
         getFromUserIdBytes();
 
     /**
-     * <code>optional string toUserId = 3;</code>
-     * @return Whether the toUserId field is set.
-     */
-    boolean hasToUserId();
-    /**
-     * <code>optional string toUserId = 3;</code>
+     * <code>string toUserId = 3;</code>
      * @return The toUserId.
      */
     java.lang.String getToUserId();
     /**
-     * <code>optional string toUserId = 3;</code>
+     * <code>string toUserId = 3;</code>
      * @return The bytes for toUserId.
      */
     com.google.protobuf.ByteString
         getToUserIdBytes();
 
     /**
-     * <code>optional string msg = 4;</code>
-     * @return Whether the msg field is set.
-     */
-    boolean hasMsg();
-    /**
-     * <code>optional string msg = 4;</code>
+     * <code>string msg = 4;</code>
      * @return The msg.
      */
     java.lang.String getMsg();
     /**
-     * <code>optional string msg = 4;</code>
+     * <code>string msg = 4;</code>
      * @return The bytes for msg.
      */
     com.google.protobuf.ByteString
@@ -99,7 +78,7 @@ public final class MsgProtobuf {
       super(builder);
     }
     private ProtocolMsg() {
-      type_ = "";
+      type_ = 0;
       fromUserId_ = "";
       toUserId_ = "";
       msg_ = "";
@@ -125,7 +104,6 @@ public final class MsgProtobuf {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
-      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -136,28 +114,28 @@ public final class MsgProtobuf {
             case 0:
               done = true;
               break;
-            case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000001;
-              type_ = bs;
+            case 8: {
+              int rawValue = input.readEnum();
+
+              type_ = rawValue;
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000002;
-              fromUserId_ = bs;
+              java.lang.String s = input.readStringRequireUtf8();
+
+              fromUserId_ = s;
               break;
             }
             case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000004;
-              toUserId_ = bs;
+              java.lang.String s = input.readStringRequireUtf8();
+
+              toUserId_ = s;
               break;
             }
             case 34: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000008;
-              msg_ = bs;
+              java.lang.String s = input.readStringRequireUtf8();
+
+              msg_ = s;
               break;
             }
             default: {
@@ -192,67 +170,155 @@ public final class MsgProtobuf {
               com.common.protocol.MsgProtobuf.ProtocolMsg.class, com.common.protocol.MsgProtobuf.ProtocolMsg.Builder.class);
     }
 
-    private int bitField0_;
-    public static final int TYPE_FIELD_NUMBER = 1;
-    private volatile java.lang.Object type_;
     /**
-     * <code>required string type = 1;</code>
-     * @return Whether the type field is set.
+     * Protobuf enum {@code protocol.ProtocolMsg.MsgEnumType}
      */
-    @java.lang.Override
-    public boolean hasType() {
-      return ((bitField0_ & 0x00000001) != 0);
+    public enum MsgEnumType
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>MSG_TYPE_GROUP = 0;</code>
+       */
+      MSG_TYPE_GROUP(0),
+      /**
+       * <code>MSG_TYPE_PRIVATE = 1;</code>
+       */
+      MSG_TYPE_PRIVATE(1),
+      /**
+       * <code>MSG_TYPE_HEARTBEAT = 2;</code>
+       */
+      MSG_TYPE_HEARTBEAT(2),
+      /**
+       * <code>MSG_TYPE_LOGIN = 3;</code>
+       */
+      MSG_TYPE_LOGIN(3),
+      UNRECOGNIZED(-1),
+      ;
+
+      /**
+       * <code>MSG_TYPE_GROUP = 0;</code>
+       */
+      public static final int MSG_TYPE_GROUP_VALUE = 0;
+      /**
+       * <code>MSG_TYPE_PRIVATE = 1;</code>
+       */
+      public static final int MSG_TYPE_PRIVATE_VALUE = 1;
+      /**
+       * <code>MSG_TYPE_HEARTBEAT = 2;</code>
+       */
+      public static final int MSG_TYPE_HEARTBEAT_VALUE = 2;
+      /**
+       * <code>MSG_TYPE_LOGIN = 3;</code>
+       */
+      public static final int MSG_TYPE_LOGIN_VALUE = 3;
+
+
+      public final int getNumber() {
+        if (this == UNRECOGNIZED) {
+          throw new java.lang.IllegalArgumentException(
+              "Can't get the number of an unknown enum value.");
+        }
+        return value;
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static MsgEnumType valueOf(int value) {
+        return forNumber(value);
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       */
+      public static MsgEnumType forNumber(int value) {
+        switch (value) {
+          case 0: return MSG_TYPE_GROUP;
+          case 1: return MSG_TYPE_PRIVATE;
+          case 2: return MSG_TYPE_HEARTBEAT;
+          case 3: return MSG_TYPE_LOGIN;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<MsgEnumType>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static final com.google.protobuf.Internal.EnumLiteMap<
+          MsgEnumType> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<MsgEnumType>() {
+              public MsgEnumType findValueByNumber(int number) {
+                return MsgEnumType.forNumber(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        if (this == UNRECOGNIZED) {
+          throw new java.lang.IllegalStateException(
+              "Can't get the descriptor of an unrecognized enum value.");
+        }
+        return getDescriptor().getValues().get(ordinal());
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return com.common.protocol.MsgProtobuf.ProtocolMsg.getDescriptor().getEnumTypes().get(0);
+      }
+
+      private static final MsgEnumType[] VALUES = values();
+
+      public static MsgEnumType valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        if (desc.getIndex() == -1) {
+          return UNRECOGNIZED;
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int value;
+
+      private MsgEnumType(int value) {
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:protocol.ProtocolMsg.MsgEnumType)
+    }
+
+    public static final int TYPE_FIELD_NUMBER = 1;
+    private int type_;
+    /**
+     * <code>.protocol.ProtocolMsg.MsgEnumType type = 1;</code>
+     * @return The enum numeric value on the wire for type.
+     */
+    @java.lang.Override public int getTypeValue() {
+      return type_;
     }
     /**
-     * <code>required string type = 1;</code>
+     * <code>.protocol.ProtocolMsg.MsgEnumType type = 1;</code>
      * @return The type.
      */
-    @java.lang.Override
-    public java.lang.String getType() {
-      java.lang.Object ref = type_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          type_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <code>required string type = 1;</code>
-     * @return The bytes for type.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getTypeBytes() {
-      java.lang.Object ref = type_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        type_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    @java.lang.Override public com.common.protocol.MsgProtobuf.ProtocolMsg.MsgEnumType getType() {
+      @SuppressWarnings("deprecation")
+      com.common.protocol.MsgProtobuf.ProtocolMsg.MsgEnumType result = com.common.protocol.MsgProtobuf.ProtocolMsg.MsgEnumType.valueOf(type_);
+      return result == null ? com.common.protocol.MsgProtobuf.ProtocolMsg.MsgEnumType.UNRECOGNIZED : result;
     }
 
     public static final int FROMUSERID_FIELD_NUMBER = 2;
     private volatile java.lang.Object fromUserId_;
     /**
-     * <code>required string fromUserId = 2;</code>
-     * @return Whether the fromUserId field is set.
-     */
-    @java.lang.Override
-    public boolean hasFromUserId() {
-      return ((bitField0_ & 0x00000002) != 0);
-    }
-    /**
-     * <code>required string fromUserId = 2;</code>
+     * <code>string fromUserId = 2;</code>
      * @return The fromUserId.
      */
     @java.lang.Override
@@ -264,14 +330,12 @@ public final class MsgProtobuf {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          fromUserId_ = s;
-        }
+        fromUserId_ = s;
         return s;
       }
     }
     /**
-     * <code>required string fromUserId = 2;</code>
+     * <code>string fromUserId = 2;</code>
      * @return The bytes for fromUserId.
      */
     @java.lang.Override
@@ -292,15 +356,7 @@ public final class MsgProtobuf {
     public static final int TOUSERID_FIELD_NUMBER = 3;
     private volatile java.lang.Object toUserId_;
     /**
-     * <code>optional string toUserId = 3;</code>
-     * @return Whether the toUserId field is set.
-     */
-    @java.lang.Override
-    public boolean hasToUserId() {
-      return ((bitField0_ & 0x00000004) != 0);
-    }
-    /**
-     * <code>optional string toUserId = 3;</code>
+     * <code>string toUserId = 3;</code>
      * @return The toUserId.
      */
     @java.lang.Override
@@ -312,14 +368,12 @@ public final class MsgProtobuf {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          toUserId_ = s;
-        }
+        toUserId_ = s;
         return s;
       }
     }
     /**
-     * <code>optional string toUserId = 3;</code>
+     * <code>string toUserId = 3;</code>
      * @return The bytes for toUserId.
      */
     @java.lang.Override
@@ -340,15 +394,7 @@ public final class MsgProtobuf {
     public static final int MSG_FIELD_NUMBER = 4;
     private volatile java.lang.Object msg_;
     /**
-     * <code>optional string msg = 4;</code>
-     * @return Whether the msg field is set.
-     */
-    @java.lang.Override
-    public boolean hasMsg() {
-      return ((bitField0_ & 0x00000008) != 0);
-    }
-    /**
-     * <code>optional string msg = 4;</code>
+     * <code>string msg = 4;</code>
      * @return The msg.
      */
     @java.lang.Override
@@ -360,14 +406,12 @@ public final class MsgProtobuf {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          msg_ = s;
-        }
+        msg_ = s;
         return s;
       }
     }
     /**
-     * <code>optional string msg = 4;</code>
+     * <code>string msg = 4;</code>
      * @return The bytes for msg.
      */
     @java.lang.Override
@@ -392,14 +436,6 @@ public final class MsgProtobuf {
       if (isInitialized == 1) return true;
       if (isInitialized == 0) return false;
 
-      if (!hasType()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasFromUserId()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -407,16 +443,16 @@ public final class MsgProtobuf {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, type_);
+      if (type_ != com.common.protocol.MsgProtobuf.ProtocolMsg.MsgEnumType.MSG_TYPE_GROUP.getNumber()) {
+        output.writeEnum(1, type_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (!getFromUserIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, fromUserId_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (!getToUserIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, toUserId_);
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (!getMsgBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 4, msg_);
       }
       unknownFields.writeTo(output);
@@ -428,16 +464,17 @@ public final class MsgProtobuf {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, type_);
+      if (type_ != com.common.protocol.MsgProtobuf.ProtocolMsg.MsgEnumType.MSG_TYPE_GROUP.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(1, type_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (!getFromUserIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, fromUserId_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (!getToUserIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, toUserId_);
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (!getMsgBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, msg_);
       }
       size += unknownFields.getSerializedSize();
@@ -455,26 +492,13 @@ public final class MsgProtobuf {
       }
       com.common.protocol.MsgProtobuf.ProtocolMsg other = (com.common.protocol.MsgProtobuf.ProtocolMsg) obj;
 
-      if (hasType() != other.hasType()) return false;
-      if (hasType()) {
-        if (!getType()
-            .equals(other.getType())) return false;
-      }
-      if (hasFromUserId() != other.hasFromUserId()) return false;
-      if (hasFromUserId()) {
-        if (!getFromUserId()
-            .equals(other.getFromUserId())) return false;
-      }
-      if (hasToUserId() != other.hasToUserId()) return false;
-      if (hasToUserId()) {
-        if (!getToUserId()
-            .equals(other.getToUserId())) return false;
-      }
-      if (hasMsg() != other.hasMsg()) return false;
-      if (hasMsg()) {
-        if (!getMsg()
-            .equals(other.getMsg())) return false;
-      }
+      if (type_ != other.type_) return false;
+      if (!getFromUserId()
+          .equals(other.getFromUserId())) return false;
+      if (!getToUserId()
+          .equals(other.getToUserId())) return false;
+      if (!getMsg()
+          .equals(other.getMsg())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -486,22 +510,14 @@ public final class MsgProtobuf {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasType()) {
-        hash = (37 * hash) + TYPE_FIELD_NUMBER;
-        hash = (53 * hash) + getType().hashCode();
-      }
-      if (hasFromUserId()) {
-        hash = (37 * hash) + FROMUSERID_FIELD_NUMBER;
-        hash = (53 * hash) + getFromUserId().hashCode();
-      }
-      if (hasToUserId()) {
-        hash = (37 * hash) + TOUSERID_FIELD_NUMBER;
-        hash = (53 * hash) + getToUserId().hashCode();
-      }
-      if (hasMsg()) {
-        hash = (37 * hash) + MSG_FIELD_NUMBER;
-        hash = (53 * hash) + getMsg().hashCode();
-      }
+      hash = (37 * hash) + TYPE_FIELD_NUMBER;
+      hash = (53 * hash) + type_;
+      hash = (37 * hash) + FROMUSERID_FIELD_NUMBER;
+      hash = (53 * hash) + getFromUserId().hashCode();
+      hash = (37 * hash) + TOUSERID_FIELD_NUMBER;
+      hash = (53 * hash) + getToUserId().hashCode();
+      hash = (37 * hash) + MSG_FIELD_NUMBER;
+      hash = (53 * hash) + getMsg().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -635,14 +651,14 @@ public final class MsgProtobuf {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        type_ = "";
-        bitField0_ = (bitField0_ & ~0x00000001);
+        type_ = 0;
+
         fromUserId_ = "";
-        bitField0_ = (bitField0_ & ~0x00000002);
+
         toUserId_ = "";
-        bitField0_ = (bitField0_ & ~0x00000004);
+
         msg_ = "";
-        bitField0_ = (bitField0_ & ~0x00000008);
+
         return this;
       }
 
@@ -669,25 +685,10 @@ public final class MsgProtobuf {
       @java.lang.Override
       public com.common.protocol.MsgProtobuf.ProtocolMsg buildPartial() {
         com.common.protocol.MsgProtobuf.ProtocolMsg result = new com.common.protocol.MsgProtobuf.ProtocolMsg(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          to_bitField0_ |= 0x00000001;
-        }
         result.type_ = type_;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          to_bitField0_ |= 0x00000002;
-        }
         result.fromUserId_ = fromUserId_;
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          to_bitField0_ |= 0x00000004;
-        }
         result.toUserId_ = toUserId_;
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          to_bitField0_ |= 0x00000008;
-        }
         result.msg_ = msg_;
-        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
@@ -736,23 +737,18 @@ public final class MsgProtobuf {
 
       public Builder mergeFrom(com.common.protocol.MsgProtobuf.ProtocolMsg other) {
         if (other == com.common.protocol.MsgProtobuf.ProtocolMsg.getDefaultInstance()) return this;
-        if (other.hasType()) {
-          bitField0_ |= 0x00000001;
-          type_ = other.type_;
-          onChanged();
+        if (other.type_ != 0) {
+          setTypeValue(other.getTypeValue());
         }
-        if (other.hasFromUserId()) {
-          bitField0_ |= 0x00000002;
+        if (!other.getFromUserId().isEmpty()) {
           fromUserId_ = other.fromUserId_;
           onChanged();
         }
-        if (other.hasToUserId()) {
-          bitField0_ |= 0x00000004;
+        if (!other.getToUserId().isEmpty()) {
           toUserId_ = other.toUserId_;
           onChanged();
         }
-        if (other.hasMsg()) {
-          bitField0_ |= 0x00000008;
+        if (!other.getMsg().isEmpty()) {
           msg_ = other.msg_;
           onChanged();
         }
@@ -763,12 +759,6 @@ public final class MsgProtobuf {
 
       @java.lang.Override
       public final boolean isInitialized() {
-        if (!hasType()) {
-          return false;
-        }
-        if (!hasFromUserId()) {
-          return false;
-        }
         return true;
       }
 
@@ -790,102 +780,64 @@ public final class MsgProtobuf {
         }
         return this;
       }
-      private int bitField0_;
 
-      private java.lang.Object type_ = "";
+      private int type_ = 0;
       /**
-       * <code>required string type = 1;</code>
-       * @return Whether the type field is set.
+       * <code>.protocol.ProtocolMsg.MsgEnumType type = 1;</code>
+       * @return The enum numeric value on the wire for type.
        */
-      public boolean hasType() {
-        return ((bitField0_ & 0x00000001) != 0);
+      @java.lang.Override public int getTypeValue() {
+        return type_;
       }
       /**
-       * <code>required string type = 1;</code>
+       * <code>.protocol.ProtocolMsg.MsgEnumType type = 1;</code>
+       * @param value The enum numeric value on the wire for type to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTypeValue(int value) {
+        
+        type_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.protocol.ProtocolMsg.MsgEnumType type = 1;</code>
        * @return The type.
        */
-      public java.lang.String getType() {
-        java.lang.Object ref = type_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            type_ = s;
-          }
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      @java.lang.Override
+      public com.common.protocol.MsgProtobuf.ProtocolMsg.MsgEnumType getType() {
+        @SuppressWarnings("deprecation")
+        com.common.protocol.MsgProtobuf.ProtocolMsg.MsgEnumType result = com.common.protocol.MsgProtobuf.ProtocolMsg.MsgEnumType.valueOf(type_);
+        return result == null ? com.common.protocol.MsgProtobuf.ProtocolMsg.MsgEnumType.UNRECOGNIZED : result;
       }
       /**
-       * <code>required string type = 1;</code>
-       * @return The bytes for type.
-       */
-      public com.google.protobuf.ByteString
-          getTypeBytes() {
-        java.lang.Object ref = type_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          type_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>required string type = 1;</code>
+       * <code>.protocol.ProtocolMsg.MsgEnumType type = 1;</code>
        * @param value The type to set.
        * @return This builder for chaining.
        */
-      public Builder setType(
-          java.lang.String value) {
+      public Builder setType(com.common.protocol.MsgProtobuf.ProtocolMsg.MsgEnumType value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
-        type_ = value;
+          throw new NullPointerException();
+        }
+        
+        type_ = value.getNumber();
         onChanged();
         return this;
       }
       /**
-       * <code>required string type = 1;</code>
+       * <code>.protocol.ProtocolMsg.MsgEnumType type = 1;</code>
        * @return This builder for chaining.
        */
       public Builder clearType() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        type_ = getDefaultInstance().getType();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required string type = 1;</code>
-       * @param value The bytes for type to set.
-       * @return This builder for chaining.
-       */
-      public Builder setTypeBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
-        type_ = value;
+        
+        type_ = 0;
         onChanged();
         return this;
       }
 
       private java.lang.Object fromUserId_ = "";
       /**
-       * <code>required string fromUserId = 2;</code>
-       * @return Whether the fromUserId field is set.
-       */
-      public boolean hasFromUserId() {
-        return ((bitField0_ & 0x00000002) != 0);
-      }
-      /**
-       * <code>required string fromUserId = 2;</code>
+       * <code>string fromUserId = 2;</code>
        * @return The fromUserId.
        */
       public java.lang.String getFromUserId() {
@@ -894,16 +846,14 @@ public final class MsgProtobuf {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            fromUserId_ = s;
-          }
+          fromUserId_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
-       * <code>required string fromUserId = 2;</code>
+       * <code>string fromUserId = 2;</code>
        * @return The bytes for fromUserId.
        */
       public com.google.protobuf.ByteString
@@ -920,7 +870,7 @@ public final class MsgProtobuf {
         }
       }
       /**
-       * <code>required string fromUserId = 2;</code>
+       * <code>string fromUserId = 2;</code>
        * @param value The fromUserId to set.
        * @return This builder for chaining.
        */
@@ -929,23 +879,23 @@ public final class MsgProtobuf {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000002;
+  
         fromUserId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required string fromUserId = 2;</code>
+       * <code>string fromUserId = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearFromUserId() {
-        bitField0_ = (bitField0_ & ~0x00000002);
+        
         fromUserId_ = getDefaultInstance().getFromUserId();
         onChanged();
         return this;
       }
       /**
-       * <code>required string fromUserId = 2;</code>
+       * <code>string fromUserId = 2;</code>
        * @param value The bytes for fromUserId to set.
        * @return This builder for chaining.
        */
@@ -954,7 +904,8 @@ public final class MsgProtobuf {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000002;
+  checkByteStringIsUtf8(value);
+        
         fromUserId_ = value;
         onChanged();
         return this;
@@ -962,14 +913,7 @@ public final class MsgProtobuf {
 
       private java.lang.Object toUserId_ = "";
       /**
-       * <code>optional string toUserId = 3;</code>
-       * @return Whether the toUserId field is set.
-       */
-      public boolean hasToUserId() {
-        return ((bitField0_ & 0x00000004) != 0);
-      }
-      /**
-       * <code>optional string toUserId = 3;</code>
+       * <code>string toUserId = 3;</code>
        * @return The toUserId.
        */
       public java.lang.String getToUserId() {
@@ -978,16 +922,14 @@ public final class MsgProtobuf {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            toUserId_ = s;
-          }
+          toUserId_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
-       * <code>optional string toUserId = 3;</code>
+       * <code>string toUserId = 3;</code>
        * @return The bytes for toUserId.
        */
       public com.google.protobuf.ByteString
@@ -1004,7 +946,7 @@ public final class MsgProtobuf {
         }
       }
       /**
-       * <code>optional string toUserId = 3;</code>
+       * <code>string toUserId = 3;</code>
        * @param value The toUserId to set.
        * @return This builder for chaining.
        */
@@ -1013,23 +955,23 @@ public final class MsgProtobuf {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000004;
+  
         toUserId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string toUserId = 3;</code>
+       * <code>string toUserId = 3;</code>
        * @return This builder for chaining.
        */
       public Builder clearToUserId() {
-        bitField0_ = (bitField0_ & ~0x00000004);
+        
         toUserId_ = getDefaultInstance().getToUserId();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string toUserId = 3;</code>
+       * <code>string toUserId = 3;</code>
        * @param value The bytes for toUserId to set.
        * @return This builder for chaining.
        */
@@ -1038,7 +980,8 @@ public final class MsgProtobuf {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000004;
+  checkByteStringIsUtf8(value);
+        
         toUserId_ = value;
         onChanged();
         return this;
@@ -1046,14 +989,7 @@ public final class MsgProtobuf {
 
       private java.lang.Object msg_ = "";
       /**
-       * <code>optional string msg = 4;</code>
-       * @return Whether the msg field is set.
-       */
-      public boolean hasMsg() {
-        return ((bitField0_ & 0x00000008) != 0);
-      }
-      /**
-       * <code>optional string msg = 4;</code>
+       * <code>string msg = 4;</code>
        * @return The msg.
        */
       public java.lang.String getMsg() {
@@ -1062,16 +998,14 @@ public final class MsgProtobuf {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            msg_ = s;
-          }
+          msg_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
-       * <code>optional string msg = 4;</code>
+       * <code>string msg = 4;</code>
        * @return The bytes for msg.
        */
       public com.google.protobuf.ByteString
@@ -1088,7 +1022,7 @@ public final class MsgProtobuf {
         }
       }
       /**
-       * <code>optional string msg = 4;</code>
+       * <code>string msg = 4;</code>
        * @param value The msg to set.
        * @return This builder for chaining.
        */
@@ -1097,23 +1031,23 @@ public final class MsgProtobuf {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000008;
+  
         msg_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string msg = 4;</code>
+       * <code>string msg = 4;</code>
        * @return This builder for chaining.
        */
       public Builder clearMsg() {
-        bitField0_ = (bitField0_ & ~0x00000008);
+        
         msg_ = getDefaultInstance().getMsg();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string msg = 4;</code>
+       * <code>string msg = 4;</code>
        * @param value The bytes for msg to set.
        * @return This builder for chaining.
        */
@@ -1122,7 +1056,8 @@ public final class MsgProtobuf {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000008;
+  checkByteStringIsUtf8(value);
+        
         msg_ = value;
         onChanged();
         return this;
@@ -1153,7 +1088,7 @@ public final class MsgProtobuf {
       return DEFAULT_INSTANCE;
     }
 
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<ProtocolMsg>
+    private static final com.google.protobuf.Parser<ProtocolMsg>
         PARSER = new com.google.protobuf.AbstractParser<ProtocolMsg>() {
       @java.lang.Override
       public ProtocolMsg parsePartialFrom(
@@ -1194,10 +1129,14 @@ public final class MsgProtobuf {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\025BaseProtocolMsg.proto\022\010protocol\"N\n\013Pro" +
-      "tocolMsg\022\014\n\004type\030\001 \002(\t\022\022\n\nfromUserId\030\002 \002" +
-      "(\t\022\020\n\010toUserId\030\003 \001(\t\022\013\n\003msg\030\004 \001(\tB\"\n\023com" +
-      ".common.protocolB\013MsgProtobuf"
+      "\n\025BaseProtocolMsg.proto\022\010protocol\"\326\001\n\013Pr" +
+      "otocolMsg\022/\n\004type\030\001 \001(\0162!.protocol.Proto" +
+      "colMsg.MsgEnumType\022\022\n\nfromUserId\030\002 \001(\t\022\020" +
+      "\n\010toUserId\030\003 \001(\t\022\013\n\003msg\030\004 \001(\t\"c\n\013MsgEnum" +
+      "Type\022\022\n\016MSG_TYPE_GROUP\020\000\022\024\n\020MSG_TYPE_PRI" +
+      "VATE\020\001\022\026\n\022MSG_TYPE_HEARTBEAT\020\002\022\022\n\016MSG_TY" +
+      "PE_LOGIN\020\003B\"\n\023com.common.protocolB\013MsgPr" +
+      "otobufb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

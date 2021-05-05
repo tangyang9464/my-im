@@ -18,7 +18,8 @@ public class Scan implements Runnable{
 
     @Override
     public void run() {
-        for(;;){
+        boolean exit = false;
+        while (!exit){
             Scanner sc = new Scanner(System.in);
             String text = sc.next();
 
@@ -27,6 +28,8 @@ public class Scan implements Runnable{
                     System.out.println(client.getAllOnlineUser());
                     break;
                 case "exit":
+                    client.close();
+                    exit=true;
                     break;
                 default:
                     String[] arr = text.split(":");

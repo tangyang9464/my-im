@@ -1,6 +1,7 @@
 package com.netty;
 
-import com.common.kafka.KafkaUtil;
+import com.common.kafka.uitl.KafkaTopicEnum;
+import com.common.kafka.uitl.KafkaUtil;
 import com.common.protocol.MsgProtobuf;
 import com.common.redis.RedisUtil;
 import io.netty.channel.ChannelHandler;
@@ -38,23 +39,31 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     private RedisUtil redisUtil;
 
     @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        log.info("新连接");
+    }
+
+    @Override
     public void channelRead(ChannelHandlerContext ctx, Object obj) throws Exception {
         MsgProtobuf.ProtocolMsg data = (MsgProtobuf.ProtocolMsg)obj;
-        String type = data.getType();
+        MsgProtobuf.ProtocolMsg.MsgEnumType type = data.getType();
         String fromUserId = data.getFromUserId();
         String toUserId = data.getToUserId();
-        //登录验证包
         switch (type) {
-            case "login":
+            case MSG_TYPE_LOGIN:
                 log.info("新客户端：" + fromUserId);
                 users.put(fromUserId, ctx);
                 channelIdAndUserId.put(ctx.channel().id(), fromUserId);
                 log.info("用户数:" + users.size());
                 break;
-            case "group":
-                kafkaUtil.sendMsg("group", data);
+            case MSG_TYPE_HEARTBEAT:
+                log.info("心跳包到来");
+                ctx.channel().writeAndFlush(data);
                 break;
-            case "private":
+            case MSG_TYPE_GROUP:
+                kafkaUtil.sendMsg(KafkaTopicEnum.GROUP_CHAT.getName(), data);
+                break;
+            case MSG_TYPE_PRIVATE:
                 if (users.containsKey(toUserId)) {
                     ChannelHandlerContext toUser = users.get(toUserId);
                     toUser.channel().writeAndFlush(data);

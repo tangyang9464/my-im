@@ -1,14 +1,12 @@
 package com.common.protocol;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 public class ProtocolMsg {
-    private String type;
+    private MsgEnumType type;
     private String fromUserId;
     private String toUserId;
     private String msg;
