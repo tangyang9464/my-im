@@ -37,6 +37,11 @@
 - **im-common**	——	公共工具包，主要存放各个中间件工具类
 - **im-server**	——	服务端
 
+## 通信格式
+
+数据长度--包类型--发送者ID--接收者ID--Data
+
+
 ## 启动
 
 在此之前请确保 zookeeper、redis、kafka运行
