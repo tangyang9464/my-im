@@ -27,3 +27,4 @@ hs_err_pid*
 /im-common/target/*
 
 /im-server/target/
+/.idea

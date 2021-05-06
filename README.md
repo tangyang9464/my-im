@@ -12,7 +12,7 @@
 | zookeeper | 分布式服务注册与发现 |
 
 ## 系统架构
-<img src='E:\image-20210506163543932.png' style='float:left; '/>
+<img src='./image-20210506163543932.png' style='float:left; '/>
 
 - `IM` 中的各个组件均采用 `SpringBoot` 构建。
 -  采用 `Netty` 构建底层通信。
