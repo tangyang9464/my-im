@@ -2,10 +2,6 @@ im:
   server:
 #    port:
     port: 7777
-  route:
-    server:
-      ip: 127.0.0.1
-      port: 9191
 
 #kafka
 spring:

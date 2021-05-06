@@ -61,7 +61,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 ctx.channel().writeAndFlush(data);
                 break;
             case MSG_TYPE_GROUP:
-                kafkaUtil.sendMsg(KafkaTopicEnum.GROUP_CHAT.getName(), data);
+                kafkaUtil.sendMsg(KafkaTopicEnum.GROUP_CHAT.getName(),fromUserId,data);
                 break;
             case MSG_TYPE_PRIVATE:
                 if (users.containsKey(toUserId)) {
@@ -69,7 +69,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                     toUser.channel().writeAndFlush(data);
                 } else {
                     String topic = redisUtil.getServerInfo(toUserId);
-                    kafkaUtil.sendMsg(topic, data);
+                    kafkaUtil.sendMsg(topic,fromUserId, data);
                 }
                 break;
         }

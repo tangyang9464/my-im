@@ -15,12 +15,12 @@ public class KafkaUtil {
     @Resource
     private KafkaTemplate<String,MsgProtobuf.ProtocolMsg> kafkaTemplate;
 
-    public void sendMsg(String topic, MsgProtobuf.ProtocolMsg msg){
-        ListenableFuture<SendResult<String, MsgProtobuf.ProtocolMsg>> future = kafkaTemplate.send(topic,msg);
+    public void sendMsg(String topic, String partitonKey,MsgProtobuf.ProtocolMsg msg){
+        ListenableFuture<SendResult<String, MsgProtobuf.ProtocolMsg>> future = kafkaTemplate.send(topic,partitonKey,msg);
         future.addCallback(success -> log.info("成功，生产者发送消息"),
                 fail -> {
                     log.info("失败，生产者发送消息，原因：{}",fail.getMessage());
-                    kafkaTemplate.send(topic, msg);
+                    kafkaTemplate.send(topic, partitonKey,msg);
                 });
     }
 }

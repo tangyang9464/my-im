@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ProtobufDecoder extends ByteToMessageDecoder {
     @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out){
         //标记初始读位置
         in.markReaderIndex();
         //判断包头长度
@@ -30,7 +30,6 @@ public class ProtobufDecoder extends ByteToMessageDecoder {
             in.resetReaderIndex();
             return;
         }
-
         //正常处理
         ByteBuf byteBuf = Unpooled.buffer(len);
         in.readBytes(byteBuf);
