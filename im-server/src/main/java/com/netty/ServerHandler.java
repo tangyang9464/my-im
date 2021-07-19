@@ -71,6 +71,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                     String topic = redisUtil.getServerInfo(toUserId);
                     kafkaUtil.sendMsg(topic,fromUserId, data);
                 }
+            default:
                 break;
         }
     }
